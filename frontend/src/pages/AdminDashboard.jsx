@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Package, Users, DollarSign, TrendingUp } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -24,7 +25,7 @@ const AdminDashboard = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/orders', {
+      const { data } = await axios.get(`${API_BASE_URL}/api/orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrders(data);
@@ -47,7 +48,7 @@ const AdminDashboard = () => {
   const updateOrderStatus = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/orders/${orderId}/status`, { status: newStatus }, {
+      await axios.put(`${API_BASE_URL}/api/orders/${orderId}/status`, { status: newStatus }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Order status updated');

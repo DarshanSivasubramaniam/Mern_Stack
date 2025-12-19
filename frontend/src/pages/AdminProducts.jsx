@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
@@ -19,7 +20,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/products/all', {
+      const { data } = await axios.get(`${API_BASE_URL}/api/products/all`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(data);
@@ -33,12 +34,12 @@ const AdminProducts = () => {
     try {
       const token = localStorage.getItem('token');
       if (editingProduct) {
-        await axios.put(`http://localhost:5000/api/products/${editingProduct._id}`, formData, {
+        await axios.put(`${API_BASE_URL}/api/products/${editingProduct._id}`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         toast.success('Product updated successfully');
       } else {
-        await axios.post('http://localhost:5000/api/products', formData, {
+        await axios.post(`${API_BASE_URL}/api/products`, formData, {
           headers: { Authorization: `Bearer ${token}` }
         });
         toast.success('Product created successfully');
@@ -63,7 +64,7 @@ const AdminProducts = () => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:5000/api/products/${id}`, {
+        await axios.delete(`${API_BASE_URL}/api/products/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         toast.success('Product deleted successfully');

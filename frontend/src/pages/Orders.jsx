@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Package, Clock, CheckCircle, Truck } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -15,7 +16,7 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:5000/api/orders/my-orders', {
+      const { data } = await axios.get(`${API_BASE_URL}/api/orders/my-orders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrders(data);

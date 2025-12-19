@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { AlertTriangle, Trash2, Plus } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 
 const ZeroStockAlert = () => {
   const [zeroStockProducts, setZeroStockProducts] = useState([]);
@@ -17,7 +18,7 @@ const ZeroStockAlert = () => {
   const fetchZeroStockProducts = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/orders/zero-stock', {
+      const response = await axios.get(`${API_BASE_URL}/api/orders/zero-stock`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setZeroStockProducts(response.data);
@@ -31,7 +32,7 @@ const ZeroStockAlert = () => {
   const deleteProduct = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/orders/zero-stock/${productId}`, {
+      await axios.delete(`${API_BASE_URL}/api/orders/zero-stock/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Product deleted successfully');
@@ -44,7 +45,7 @@ const ZeroStockAlert = () => {
   const addStock = async (productId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/products/${productId}`, 
+      await axios.put(`${API_BASE_URL}/api/products/${productId}`, 
         { stock: parseInt(newStock) }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );

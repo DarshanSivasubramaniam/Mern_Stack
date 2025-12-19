@@ -5,6 +5,7 @@ import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 
 const Cart = () => {
   const { cartItems, updateQuantity, removeFromCart, clearCart, cartTotal } = useCart();
@@ -34,7 +35,7 @@ const Cart = () => {
       };
 
       const token = localStorage.getItem('token');
-      await axios.post('http://localhost:5000/api/orders', orderData, {
+      await axios.post(`${API_BASE_URL}/api/orders`, orderData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       toast.success('Order placed successfully!');

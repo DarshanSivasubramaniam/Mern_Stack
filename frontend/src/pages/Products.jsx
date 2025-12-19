@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ShoppingCart, Plus, Minus, Filter } from 'lucide-react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import API_BASE_URL from '../config/api';
 import { useCart } from '../context/CartContext';
 
 const Products = () => {
@@ -27,7 +28,7 @@ const Products = () => {
 
   const fetchProducts = async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/products');
+      const { data } = await axios.get(`${API_BASE_URL}/api/products`);
       setProducts(data);
     } catch (error) {
       toast.error('Failed to fetch products');
